@@ -2,7 +2,7 @@
 MSCH-C220 Final Project
 
 ## Theme
-How you thought about or interpreted the theme
+I thought about the theme very abstractly, building off it using a lot of assets I had my eye on recently. I decided to create a game that seems very straightforward and one-dimensional, i.e. another 2d platformer; and then for there to be a button, and have it change the entire game to a top-down or 3d setting, to completely disarm the player. Almost a redpill of sorts.
 
 ## Game Play
 Objective
@@ -22,4 +22,5 @@ What is your special focus? What did you do for it? How would you rate your own 
 
 ## Future Development
 
-# Created by: Your Name
+# Created by: 
+Izzy Rose (imrose334)
