@@ -5,12 +5,12 @@ MSCH-C220 Final Project
 I thought about the theme very abstractly, building off it using a lot of assets I had my eye on recently. I decided to create a game that seems very straightforward and one-dimensional, i.e. another 2d platformer; and then for there to be a button, and have it change the entire game to something entirely different. Like, a 3d setting, or a different camera view, to completely disarm the player. 
 
 ## Game Play
-The objective is to press the button at the end of the first level, and then make your way to the end of the second to return home.
+The objective of the first level is to find the hidden button zone, where the button will magically appear. The game is won when you make your way to the end of the second level to return home to your dimension.
 Game-play instructions
-LEVEL 1:  movement: arrow keys, jump: space
+LEVEL 1:  movement: wasd, attack: space
 LEVEL 2:  ......
 
-## What did you 
+## What did you ....
 Struggles or surprises you encountered during the development of the game
 I struggled with the time constraints, as I have been busy recently, and I apologize for my failure to submit this assignment on time. 
 
