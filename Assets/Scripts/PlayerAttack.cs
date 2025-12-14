@@ -28,19 +28,23 @@ public class PlayerAttack : MonoBehaviour
 
     void TryAttack()
     {
-        if (isAttacking)
+        if (Time.time < lastAttackTime + attackCooldown)
             return;
 
-        if (Time.time < lastAttackTime + attackCooldown)
+        if (isAttacking)
             return;
 
         isAttacking = true;
         lastAttackTime = Time.time;
 
-        animator.SetBool("attack", true);
+        animator.ResetTrigger("attack"); // safety
+        animator.SetTrigger("attack");
+
+        // 🔥 FAILSAFE — guarantees unlock even if animation event fails
+        Invoke(nameof(ForceEndAttack), attackCooldown);
     }
 
-    // 🔥 CALLED FROM ANIMATION EVENT (THIS IS CRITICAL)
+    // 🔥 HIT FRAME (ANIMATION EVENT)
     public void DealDamage()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(
@@ -56,16 +60,20 @@ public class PlayerAttack : MonoBehaviour
 
             EnemyHealth enemyHealth = hit.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
-            {
                 enemyHealth.TakeDamage(attackDamage);
-            }
         }
     }
 
-    // 🔥 CALLED FROM ANIMATION EVENT (END OF ANIM)
+    // 🔥 END FRAME (ANIMATION EVENT)
     public void EndAttack()
     {
-        animator.SetBool("attack", false);
+        isAttacking = false;
+        CancelInvoke(nameof(ForceEndAttack));
+    }
+
+    // 🔥 ABSOLUTE FAILSAFE
+    void ForceEndAttack()
+    {
         isAttacking = false;
     }
 
