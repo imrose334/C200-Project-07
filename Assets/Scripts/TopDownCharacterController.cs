@@ -1,90 +1,58 @@
 using UnityEngine;
 
-// Ensure Rigidbody2D is present for physics
-[RequireComponent(typeof(Rigidbody2D))] 
+[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class TopDownCharacterController : MonoBehaviour
 {
-    [Header("Movement Settings")]
-    [Tooltip("The base speed of the character.")]
-    public float baseMoveSpeed = 5f;
-    [Tooltip("Speed multiplier applied when entering 'Grass' zones.")]
-    public float grassSpeedMultiplier = 0.5f;
+    public float moveSpeed = 5f;
 
-    // --- Core Variables ---
-    private float currentMoveSpeed;
     private Rigidbody2D rb;
-    private Vector2 rawInputDirection; 
-    
-    // State variables for interactions
-    private bool isOverGrass = false;
-    private bool isNearHouse = false;  // <--- THIS LINE IS NOW CORRECT
-    
+    private Collider2D col;
+    private Vector2 input;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        currentMoveSpeed = baseMoveSpeed;
+        col = GetComponent<Collider2D>();
+
+        rb.gravityScale = 0f;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        rb.bodyType = RigidbodyType2D.Kinematic; // IMPORTANT for trigger-based movement
     }
 
     void Update()
     {
-        // 1. INPUT READING (Read the keys every frame)
-        
-        float moveX = 0f;
-        float moveY = 0f;
-        
-        if (Input.GetKey(KeyCode.A)) { moveX = -1f; }
-        else if (Input.GetKey(KeyCode.D)) { moveX = 1f; }
-
-        if (Input.GetKey(KeyCode.S)) { moveY = -1f; } 
-        else if (Input.GetKey(KeyCode.W)) { moveY = 1f; }
-        
-        rawInputDirection = new Vector2(moveX, moveY).normalized;
-        
-        // --- Interaction Input (E key) ---
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("Interaction key pressed (E).");
-        }
+        input.x = Input.GetAxisRaw("Horizontal");
+        input.y = Input.GetAxisRaw("Vertical");
+        input = input.normalized;
     }
 
-    // FixedUpdate is for physics calculations
     void FixedUpdate()
     {
-        // 2. MOVEMENT EXECUTION
-        rb.velocity = rawInputDirection * currentMoveSpeed;
-    }
-    
-    // --- Interaction / Trigger Logic ---
-    
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Grass"))
+        Vector2 moveDelta = input * moveSpeed * Time.fixedDeltaTime;
+        Vector2 targetPos = rb.position + moveDelta;
+
+        // Check if moving would overlap a Collision trigger
+        Collider2D hit = Physics2D.OverlapBox(
+            targetPos,
+            col.bounds.size,
+            0f,
+            LayerMask.GetMask("Default")
+        );
+
+        if (hit != null && hit.CompareTag("Collision"))
         {
-            isOverGrass = true;
-            currentMoveSpeed = baseMoveSpeed * grassSpeedMultiplier; 
-            Debug.Log("Entered Grass. Speed reduced.");
+            // BLOCK movement
+            return;
         }
-        
-        if (other.CompareTag("House"))
-        {
-            isNearHouse = true;
-            Debug.Log("Near House. Press E to enter/interact.");
-        }
+
+        rb.MovePosition(targetPos);
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Grass"))
+        if (other.CompareTag("Collision"))
         {
-            isOverGrass = false;
-            currentMoveSpeed = baseMoveSpeed;
-            Debug.Log("Exited Grass. Speed restored.");
-        }
-        
-        if (other.CompareTag("House"))
-        {
-            isNearHouse = false;
-            Debug.Log("Away from House.");
+            Debug.Log("Entered Collision trigger");
         }
     }
 }

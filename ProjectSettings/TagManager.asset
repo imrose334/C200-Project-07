@@ -7,6 +7,11 @@ TagManager:
   - CinemachineTarget
   - Grass
   - House
+  - grass
+  - collision
+  - Collision
+  - wall
+  - guy
   layers:
   - Default
   - TransparentFX
@@ -14,8 +19,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Collision
+  - Player
   - 
   - 
   - 
@@ -41,6 +46,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Collision
+    uniqueID: 509021521
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
