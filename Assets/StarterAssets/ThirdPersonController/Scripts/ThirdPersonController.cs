@@ -111,16 +111,17 @@ namespace StarterAssets
         private bool _hasAnimator;
 
         private bool IsCurrentDeviceMouse
-        {
-            get
-            {
+{
+    get
+    {
 #if ENABLE_INPUT_SYSTEM
-                return _playerInput.currentControlScheme == "KeyboardMouse";
+        return Mouse.current != null;
 #else
-				return false;
+        return false;
 #endif
-            }
-        }
+    }
+}
+
 
 
         private void Awake()
