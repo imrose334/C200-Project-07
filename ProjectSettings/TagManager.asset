@@ -13,6 +13,7 @@ TagManager:
   - wall
   - guy
   - vamp
+  - TeleportZone
   layers:
   - Default
   - TransparentFX
