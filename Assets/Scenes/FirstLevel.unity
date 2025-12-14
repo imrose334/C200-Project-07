@@ -1055,7 +1055,7 @@ GameObject:
   - component: {fileID: 695565706}
   - component: {fileID: 695565708}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Health Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1130,6 +1130,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31e1197e98c3e4d7682a5e0917552f94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHealth: {fileID: 845496188}
+  healthBarImage: {fileID: 695565706}
+  healthSprites:
+  - {fileID: 178604785, guid: 730da419f69ef4a3ab5d4b4c1b9c3a44, type: 3}
+  - {fileID: 21300000, guid: c3fcfe04cc7d84e2da5041f83c4a1c13, type: 3}
+  - {fileID: 21300000, guid: 49dc523bd6b47481780ce49fd1ebef16, type: 3}
+  - {fileID: 21300000, guid: bbd753213f4334e49aeec5258d693cae, type: 3}
+  - {fileID: 21300000, guid: 07116178ad2ff494f9175c4978743196, type: 3}
+  - {fileID: 21300000, guid: 17b03dce65435401d88d119a3f9e152a, type: 3}
+  - {fileID: 21300000, guid: e3c27b19eb1a74e5795e8d84b40d9d3d, type: 3}
+  - {fileID: 21300000, guid: b50e73b46776c4efe8d55089b2aef0a5, type: 3}
+  - {fileID: 21300000, guid: 1b1e8069312bb4b91a2de87376f283cc, type: 3}
 --- !u!1001 &779452290
 PrefabInstance:
   m_ObjectHideFlags: 0
